@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1v7u9ii" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+  <bpmn:process id="Process_10vi55i" name="Formulario Resultado" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_13wxhjk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_0sx05rx" name="Formulario da Calculadora">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="valorA" label="Primeiro Valor" type="long">
+            <camunda:validation />
+          </camunda:formField>
+          <camunda:formField id="valorB" label="Segundo Valor" type="long" />
+          <camunda:formField id="operacao" label="Operação" type="enum">
+            <camunda:value id="somar" name="Somar" />
+            <camunda:value id="subtrair" name="Subtrar" />
+            <camunda:value id="multiplicar" name="Multiplicar" />
+            <camunda:value id="dividir" name="Dividir" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13wxhjk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gkjrwn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_13wxhjk" sourceRef="StartEvent_1" targetRef="Activity_0sx05rx" />
+    <bpmn:userTask id="Activity_1ub623s" name="Formulario Resultado">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="resultadoFinal" label="Resultado Final" type="long">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13evwss</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ggfh2s</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1tqni8c">
+      <bpmn:incoming>Flow_1ggfh2s</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ggfh2s" sourceRef="Activity_1ub623s" targetRef="Event_1tqni8c" />
+    <bpmn:serviceTask id="calculadora" name="Calculadora" camunda:type="external" camunda:topic="calculadora">
+      <bpmn:incoming>Flow_1gkjrwn</bpmn:incoming>
+      <bpmn:outgoing>Flow_13evwss</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1gkjrwn" sourceRef="Activity_0sx05rx" targetRef="calculadora" />
+    <bpmn:sequenceFlow id="Flow_13evwss" sourceRef="calculadora" targetRef="Activity_1ub623s" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_10vi55i">
+      <bpmndi:BPMNEdge id="Flow_1ggfh2s_di" bpmnElement="Flow_1ggfh2s">
+        <di:waypoint x="730" y="117" />
+        <di:waypoint x="772" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13wxhjk_di" bpmnElement="Flow_13wxhjk">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="330" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gkjrwn_di" bpmnElement="Flow_1gkjrwn">
+        <di:waypoint x="430" y="117" />
+        <di:waypoint x="490" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13evwss_di" bpmnElement="Flow_13evwss">
+        <di:waypoint x="590" y="117" />
+        <di:waypoint x="630" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_027xqsw_di" bpmnElement="Activity_0sx05rx">
+        <dc:Bounds x="330" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0u8vfr0_di" bpmnElement="calculadora">
+        <dc:Bounds x="490" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e3fudd_di" bpmnElement="Activity_1ub623s">
+        <dc:Bounds x="630" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tqni8c_di" bpmnElement="Event_1tqni8c">
+        <dc:Bounds x="772" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
